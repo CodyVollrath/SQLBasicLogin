@@ -1,8 +1,3 @@
-'''
-SignUp - creates account
-SignupPrompt - asks if you have signed up
-'''
-
 import sqlite3
 from sqlite3 import Error
 import re
@@ -102,12 +97,14 @@ def signIn():
     @output: Create Accounts for users that do not have one
 '''
 def checkAndAcceptCredintials(connect, username, password):
-    sql = "INSERT INTO loginData VALUES ('{Uname}','{Pword}');"\
-        .format(Uname = username, Pword = password)
-
-    cursr = connect.cursor()
-    cursr.execute(sql)
-    connect.commit()
+    try:
+        sql = "INSERT INTO loginData VALUES ('{Uname}','{Pword}');"\
+            .format(Uname = username, Pword = password)
+        cur = connect.cursor()
+        cur.executescript(sql)
+        connect.commit()
+    except Error:
+        print("Those Creds already exist vro")
 
 '''
     @Function: asks for data in the database
@@ -115,7 +112,6 @@ def checkAndAcceptCredintials(connect, username, password):
     @output: none
 '''
 def queryCredintials(connect, username, password):
-    #TODO - Create a means for data to be checked and queried - run before var sql in check&Accewpt method
     userPasswordSQL = "(" + "'" + username + "'" + "," + " '" + password + "'" + ")"
     sql = "SELECT * FROM loginData WHERE userName = '{Uname}' AND password = '{Pword}'"\
         .format(Uname = username, Pword = password)
@@ -129,7 +125,3 @@ def queryCredintials(connect, username, password):
         print("Your In")
 
 main()
-
-
-
-
