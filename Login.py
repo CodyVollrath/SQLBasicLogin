@@ -6,7 +6,7 @@ SignupPrompt - asks if you have signed up
 import sqlite3
 from sqlite3 import Error
 import re
-
+import getpass
 
 PROMPT = "Have you signed up? [yes, no]:"
 def main():
@@ -75,7 +75,7 @@ def signUp():
     database = "login.db"
     conn = connectToDB(database)
     username = str(input("Create username: "))
-    password = str(input("Create password: "))
+    password = getpass.getpass("Create password:")
     username.strip("\s+")
     password.strip("\s+")
     checkAndAcceptCredintials(conn, username, password)
@@ -91,7 +91,7 @@ def signIn():
     database = "login.db"
     conn = connectToDB(database)
     username = str(input("Username: "))
-    password = str(input("Password: "))
+    password = getpass.getpass()
     username.strip("\s+")
     password.strip("\s+")
 
